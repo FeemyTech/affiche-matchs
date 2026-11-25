@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title>FootCrest — Catalogue des clubs</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1220;--panel:#111c2e;--panel2:#17243a;--line:#26364e;--text:#edf3fb;--muted:#9aabc1;--accent:#7cdbb2;--accent2:#b6f3d9}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0%,#1c3450 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .wrap{width:min(1180px,calc(100% - 32px));margin:auto;padding:38px 0 60px}
+    header{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:30px}.brand{display:flex;align-items:center;gap:12px}.mark{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#8be6c1,#3c9d82);display:grid;place-items:center;color:#092016;font-size:23px;font-weight:900}.brand strong{display:block;font-size:18px;letter-spacing:.3px}.brand span{color:var(--muted);font-size:12px}
+    .tag{border:1px solid var(--line);background:#142239;color:var(--accent2);padding:8px 12px;border-radius:999px;font-size:12px}
+    .hero{padding:28px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,rgba(29,51,76,.94),rgba(17,28,46,.92));box-shadow:0 18px 55px #0003}
+    .eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase}.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:9px 0 10px;letter-spacing:-1.3px}.hero p{margin:0;color:var(--muted);max-width:680px}
+    .toolbar{display:grid;grid-template-columns:minmax(220px,1fr) minmax(190px,260px);gap:12px;margin:22px 0 14px}
+    input,select{width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:13px;padding:13px 15px;font:inherit;outline:none}input:focus,select:focus{border-color:var(--accent)}
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:13px;margin:10px 2px 16px}.meta b{color:var(--text)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:13px}
+    .club{min-width:0;border:1px solid var(--line);border-radius:17px;background:linear-gradient(180deg,#15243a,#101a2b);padding:17px 13px 13px;text-align:center;transition:.18s}
+    .club:hover{transform:translateY(-3px);border-color:#5c9e89;box-shadow:0 12px 28px #0003}
+    .crest{height:82px;display:grid;place-items:center;margin-bottom:10px}.crest img{width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 5px 8px #0005)}.fallback{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:#243852;color:var(--accent2);font-weight:900;font-size:20px}
+    .club h3{font-size:14px;margin:0 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.club small{display:block;color:var(--muted);font-size:11px;min-height:17px}
+    .copy{margin-top:12px;width:100%;border:1px solid #38516b;background:#1b2d45;color:#d9f5e9;border-radius:10px;padding:9px 8px;font:600 12px inherit;cursor:pointer}.copy:hover{background:#25435a}
+    .status{padding:36px 16px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted);grid-column:1/-1}.spinner{display:inline-block;width:17px;height:17px;border:2px solid #53677d;border-top-color:var(--accent);border-radius:50%;vertical-align:-4px;margin-right:8px;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    footer{margin-top:28px;color:#8193aa;font-size:11px;text-align:center}footer a{color:var(--accent2)}
+    @media(max-width:600px){.wrap{width:min(100% - 22px,1180px);padding-top:22px}.hero{padding:21px}.toolbar{grid-template-columns:1fr}.tag{display:none}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.club{padding:13px 9px}.crest{height:72px}.crest img{width:64px;height:64px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="brand"><div class="mark">⚽</div><div><strong>FootCrest</strong><span>Catalogue des clubs de football</span></div></div>
+      <div class="tag">Catalogue multi-championnats</div>
+    </header>
+    <section class="hero">
+      <div class="eyebrow">Bibliothèque de logos</div>
+      <h1>Retrouve le blason de ton club.</h1>
+      <p>Explore les équipes de plusieurs championnats, recherche un club et copie l’adresse de son logo pour l’utiliser dans tes créations graphiques.</p>
+    </section>
+    <section class="toolbar" aria-label="Filtres du catalogue">
+      <input id="search" type="search" placeholder="Rechercher un club…" autocomplete="off" aria-label="Rechercher un club">
+      <select id="league" aria-label="Filtrer par championnat"><option value="all">Tous les championnats</option></select>
+    </section>
+    <div class="meta"><span id="count">Chargement du catalogue…</span><span id="source">Logos fournis par ESPN</span></div>
+    <section id="grid" class="grid" aria-live="polite"><div class="status"><span class="spinner"></span>Chargement des équipes…</div></section>
+    <footer>Les noms et emblèmes appartiennent à leurs clubs respectifs. Les images sont chargées depuis les flux publics d’ESPN. Leur réutilisation peut être soumise à des droits de marque.</footer>
+  </main>
+<script>
+(() => {
+  "use strict";
+  const leagues = [
+    ["eng.1","Premier League"],["esp.1","La Liga"],["ita.1","Serie A"],
+    ["ger.1","Bundesliga"],["fra.1","Ligue 1"],["por.1","Liga Portugal"],
+    ["ned.1","Eredivisie"],["bel.1","Belgian Pro League"],["tur.1","Süper Lig"],
+    ["sco.1","Scottish Premiership"],["usa.1","MLS"],["mex.1","Liga MX"],
+    ["bra.1","Brasileirão"],["uefa.champions","Ligue des champions"]
+  ];
+  const grid=document.getElementById("grid"), search=document.getElementById("search");
+  const leagueSelect=document.getElementById("league"), count=document.getElementById("count");
+  let teams=[];
+  leagues.forEach(([id,name])=>{const o=document.createElement("option");o.value=id;o.textContent=name;leagueSelect.appendChild(o);});
+
+  function logoFor(team){
+    const logos=Array.isArray(team.logos)?team.logos:[];
+    const preferred=logos.find(x=>x.rel?.includes("default"))||logos[0];
+    return preferred?.href||team.logo||"";
+  }
+  async function loadLeague([id,name]){
+    const url=`https://site.api.espn.com/apis/site/v2/sports/soccer/${id}/teams`;
+    const response=await fetch(url);
+    if(!response.ok) throw new Error(`${name}: HTTP ${response.status}`);
+    const data=await response.json();
+    const league=data.sports?.[0]?.leagues?.[0];
+    const rows=league?.teams||[];
+    return rows.map(row=>{
+      const t=row.team||row;
+      return {id:`${id}-${t.id||t.slug||t.displayName}`,name:t.displayName||t.name||"Club",league:name,leagueId:id,logo:logoFor(t)};
+    }).filter(t=>t.logo);
+  }
+  function render(){
+    const q=search.value.trim().toLocaleLowerCase("fr");
+    const selected=leagueSelect.value;
+    const filtered=teams.filter(t=>(selected==="all"||t.leagueId===selected)&&t.name.toLocaleLowerCase("fr").includes(q));
+    count.innerHTML=`<b>${filtered.length}</b> club${filtered.length>1?"s":""} affiché${filtered.length>1?"s":""} · ${teams.length} logos chargés`;
+    grid.replaceChildren();
+    if(!filtered.length){const empty=document.createElement("div");empty.className="status";empty.textContent="Aucun club trouvé. Essaie un autre nom ou championnat.";grid.appendChild(empty);return;}
+    const fragment=document.createDocumentFragment();
+    filtered.forEach(team=>{
+      const card=document.createElement("article");card.className="club";
+      const crest=document.createElement("div");crest.className="crest";
+      const img=document.createElement("img");img.src=team.logo;img.alt=`Logo ${team.name}`;img.loading="lazy";img.referrerPolicy="no-referrer";
+      const fallback=document.createElement("div");fallback.className="fallback";fallback.textContent=team.name.split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
+      img.addEventListener("error",()=>{img.replaceWith(fallback);},{once:true});
+      crest.appendChild(img);
+      const title=document.createElement("h3");title.textContent=team.name;title.title=team.name;
+      const sub=document.createElement("small");sub.textContent=team.league;
+      const btn=document.createElement("button");btn.className="copy";btn.type="button";btn.textContent="Copier l’adresse du logo";
+      btn.addEventListener("click",async()=>{
+        try{await navigator.clipboard.writeText(team.logo);btn.textContent="Adresse copiée ✓";}
+        catch{const area=document.createElement("textarea");area.value=team.logo;document.body.appendChild(area);area.select();document.execCommand("copy");area.remove();btn.textContent="Adresse copiée ✓";}
+        setTimeout(()=>btn.textContent="Copier l’adresse du logo",1600);
+      });
+      card.append(crest,title,sub,btn);fragment.appendChild(card);
+    });
+    grid.appendChild(fragment);
+  }
+  search.addEventListener("input",render);leagueSelect.addEventListener("change",render);
+  async function init(){
+    const results=await Promise.allSettled(leagues.map(loadLeague));
+    results.forEach((result,i)=>{if(result.status==="fulfilled")teams.push(...result.value);});
+    const unique=new Map(teams.map(t=>[t.id,t]));teams=[...unique.values()].sort((a,b)=>a.name.localeCompare(b.name,"fr"));
+    if(!teams.length){
+      grid.innerHTML='<div class="status">Impossible de charger les logos pour le moment. Vérifie ta connexion puis actualise la page.</div>';
+      count.textContent="Catalogue indisponible";
+      return;
+    }
+    render();
+    const failed=results.filter(x=>x.status==="rejected").length;
+    if(failed) document.getElementById("source").textContent=`Certaines compétitions sont temporairement indisponibles (${failed})`;
+  }
+  init();
+})();
+</script>
+</body>
+</html>
