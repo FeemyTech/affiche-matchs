@@ -22,6 +22,8 @@ Vous pouvez aussi simplement double-cliquer sur `index.html` pour l'utiliser en 
   Zone vide + « Importer la liste » : charge la liste de la semaine (voir ci-dessous).
 - **Logos des clubs** : importez-les en lot, le nom du fichier doit être le nom du club (`arsenal.png`).
   Ils sont mémorisés dans votre navigateur.
+- **Enregistrer** : bouton « Enregistrer » (avec un nom d'affiche). Vos affiches enregistrées apparaissent sous l'aperçu, avec « Ouvrir » et « Supprimer », et restent disponibles à la réouverture.
+- **Filigrane** : section « Filigrane » (texte, 5 styles, opacité, taille, rotation, couleur).
 - **Export** : bouton « Télécharger en PNG ». Le bouton « Sauvegarder » crée un fichier de réglages à conserver.
 
 ## Mettre à jour la liste des matchs de la semaine
