@@ -1,0 +1,48 @@
+{
+  "name": "eu-editeur-affiches",
+  "version": "1.0.0",
+  "description": "Éditeur local d’affiches de matchs – EU",
+  "main": "electron-main.cjs",
+  "author": "EU",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.eu.editeuraffiches",
+    "productName": "EU Editeur d’affiches",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "index.html",
+      "manifest.webmanifest",
+      "service-worker.js",
+      "icons/**/*",
+      "electron-main.cjs",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

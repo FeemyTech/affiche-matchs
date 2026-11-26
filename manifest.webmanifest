@@ -1,0 +1,27 @@
+{
+  "id": "./",
+  "name": "EU – Éditeur d’affiches de matchs",
+  "short_name": "EU Affiches",
+  "description": "Création et sauvegarde locale d’affiches de matchs de football.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#160c0e",
+  "theme_color": "#160c0e",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
